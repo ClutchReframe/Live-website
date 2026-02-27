@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Terms of Service for ClutchReframe Live, a League of Legends live stream camera automation plugin for OBS Studio.">
+    <meta name="theme-color" content="#05050d">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Terms of Service | ClutchReframe Live">
+    <meta property="og:description" content="Terms of Service for ClutchReframe Live. Use the plugin responsibly and within Riot Games' policies.">
+    <meta property="og:url" content="https://live.clutchreframe.com/terms.html">
+    <meta property="og:image" content="https://live.clutchreframe.com/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="ClutchReframe Live">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Terms of Service | ClutchReframe Live">
+    <meta name="twitter:description" content="Terms of Service for ClutchReframe Live.">
+    <meta name="twitter:image" content="https://live.clutchreframe.com/og-image.png">
+
+    <title>Terms of Service | ClutchReframe Live</title>
+    <link rel="canonical" href="https://live.clutchreframe.com/terms.html">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --cyan: #00d9ff;
+            --purple: #7c3aed;
+            --bg: #05050d;
+            --border: rgba(255, 255, 255, 0.06);
+            --text: #e2e8f0;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --nav-height: 72px;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.75;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--cyan) 0%, var(--purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ── NAVBAR ── */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--nav-height);
+            z-index: 100;
+            background: rgba(5, 5, 13, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            position: relative;
+        }
+
+        .nav-logo {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-decoration: none;
+            color: var(--text);
+            z-index: 2;
+        }
+
+        .nav-back {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .nav-back:hover { color: var(--cyan); }
+
+        /* ── Page Layout ── */
+        .page-container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: calc(var(--nav-height) + 48px) 24px 80px;
+        }
+
+        .page-header {
+            margin-bottom: 48px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+        }
+
+        .page-header h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.4rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--cyan) 0%, var(--purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-header .updated {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* ── Content ── */
+        .content h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #f1f5f9;
+            margin: 2.4rem 0 0.7rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .content h2:first-child {
+            margin-top: 0;
+            padding-top: 0;
+            border-top: none;
+        }
+
+        .content p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.8rem;
+        }
+
+        .content strong { color: var(--text); }
+
+        .content ul {
+            list-style: none;
+            margin: 0.5rem 0 1rem;
+        }
+
+        .content ul li {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            padding: 0.35rem 0 0.35rem 1.4rem;
+            position: relative;
+        }
+
+        .content ul li::before {
+            content: '—';
+            position: absolute;
+            left: 0;
+            color: var(--cyan);
+            opacity: 0.6;
+        }
+
+        .content a {
+            color: var(--cyan);
+            text-decoration: none;
+        }
+
+        .content a:hover { text-decoration: underline; }
+
+        /* ── Disclaimer box ── */
+        .disclaimer-box {
+            margin-top: 2.4rem;
+            padding: 20px 24px;
+            background: rgba(0, 217, 255, 0.04);
+            border: 1px solid rgba(0, 217, 255, 0.15);
+            border-left: 3px solid var(--cyan);
+            border-radius: 10px;
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        /* ── Page Footer ── */
+        .page-footer {
+            margin-top: 56px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .page-footer a {
+            color: var(--text-muted);
+            text-decoration: none;
+        }
+
+        .page-footer a:hover { color: var(--cyan); }
+    </style>
+</head>
+<body>
+
+<!-- ══════════ NAVBAR ══════════ -->
+<nav class="navbar">
+    <div class="nav-inner">
+        <a href="index.html" class="nav-logo">
+            <span class="gradient-text">ClutchReframe</span> Live
+        </a>
+        <a href="index.html" class="nav-back">&larr; Back to Home</a>
+    </div>
+</nav>
+
+<div class="page-container">
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1>Terms of Service</h1>
+        <p class="updated">Last Updated: February 27, 2026</p>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+        <h2>Acceptance of Terms</h2>
+        <p>By installing or using ClutchReframe Live ("the Plugin"), you agree to be bound by these Terms of Service. If you do not agree, please uninstall and discontinue use of the Plugin.</p>
+
+        <h2>Description of Service</h2>
+        <p>ClutchReframe Live is a League of Legends live stream camera automation plugin for OBS Studio. It analyzes screen capture frames in real-time to detect game events, and automatically controls the broadcast camera view (panning and zooming) during live streams. All processing occurs locally on your machine. The plugin only affects what stream viewers see — the player's in-game view is never altered.</p>
+
+        <h2>Permitted Use</h2>
+        <p>You may use ClutchReframe Live for personal, non-commercial enhancement of your own live stream production. Permitted uses include:</p>
+        <ul>
+            <li>Using the plugin to automate broadcast camera work during your own live streams</li>
+            <li>Broadcasting with automated camera control to any streaming platform via OBS</li>
+            <li>Using the Plugin in conjunction with your legitimate Riot Games account</li>
+        </ul>
+
+        <h2>Prohibited Use</h2>
+        <p>You agree not to use ClutchReframe Live to:</p>
+        <ul>
+            <li>Violate Riot Games' Terms of Service or any applicable policies</li>
+            <li>Record, capture, or distribute other players' gameplay without their consent where prohibited by applicable law</li>
+            <li>Reverse-engineer, decompile, or modify the Plugin</li>
+            <li>Use the Plugin for any unlawful purpose</li>
+        </ul>
+
+        <h2>OBS Studio Integration</h2>
+        <p>ClutchReframe Live operates as a plugin within OBS Studio. Your use of OBS Studio is subject to the <a href="https://obsproject.com" target="_blank" rel="noopener">OBS Studio license terms</a>. ClutchReframe Live does not modify OBS Studio's core functionality beyond providing automated camera control features through its plugin interface.</p>
+
+        <h2>Riot Games Compliance</h2>
+        <p>ClutchReframe Live is designed to comply with Riot Games' third-party application policies. The Plugin does not:</p>
+        <ul>
+            <li>Read or transmit in-memory game data — the plugin analyzes only the screen capture of the broadcast feed</li>
+            <li>Alter the player's in-game view or provide any information not already visible on screen</li>
+            <li>Provide competitive advantages such as ability timers, cooldown tracking, or map information beyond what is visible on screen</li>
+            <li>Automate any in-game actions or inputs</li>
+        </ul>
+
+        <h2>Intellectual Property</h2>
+        <p>ClutchReframe Live and its original code are the intellectual property of ClutchReframe. League of Legends, Riot Games, and all associated marks are trademarks of Riot Games, Inc. We claim no ownership of Riot Games' intellectual property.</p>
+
+        <h2>Disclaimer of Warranties</h2>
+        <p>The Plugin is provided "as is" and "as available" without warranties of any kind, express or implied. We do not warrant that the Plugin will be uninterrupted, error-free, or compatible with all system configurations.</p>
+
+        <h2>Limitation of Liability</h2>
+        <p>To the maximum extent permitted by applicable law, ClutchReframe shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the Plugin.</p>
+
+        <h2>Changes to Terms</h2>
+        <p>We reserve the right to update these Terms of Service at any time. Continued use of the Plugin after changes constitutes acceptance of the revised Terms.</p>
+
+        <h2>Contact</h2>
+        <p>For questions about these Terms, please contact us at: <a href="mailto:jintian138138@gmail.com">jintian138138@gmail.com</a></p>
+
+        <div class="disclaimer-box">
+            <strong>Riot Games Disclaimer</strong><br><br>
+            ClutchReframe Live is not endorsed by Riot Games and does not reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, League of Legends, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.
+        </div>
+    </div>
+
+    <!-- Page Footer -->
+    <div class="page-footer">
+        <span>&copy; 2026 ClutchReframe. All rights reserved.</span>
+        <span>
+            <a href="privacy.html">Privacy Policy</a>
+            &nbsp;&middot;&nbsp;
+            <a href="terms.html">Terms of Service</a>
+        </span>
+    </div>
+</div>
+
+</body>
+</html>

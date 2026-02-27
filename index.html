@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ClutchReframe Live | Real-time automatic camera control for League of Legends live streams. Built for OBS Studio. Only affects what viewers see — your game view stays unchanged. Fully local.">
+    <meta name="theme-color" content="#05050d">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="ClutchReframe Live | LoL Stream Auto-Camera">
+    <meta property="og:description" content="Real-time automatic camera control for LoL live streams. Only your viewers see the camera work — your game view is unchanged. Fully local. Built for OBS Studio.">
+    <meta property="og:url" content="https://live.clutchreframe.com/">
+    <meta property="og:image" content="https://live.clutchreframe.com/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="ClutchReframe Live">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ClutchReframe Live | LoL Stream Auto-Camera">
+    <meta name="twitter:description" content="Real-time automatic camera control for LoL live streams. Built for OBS Studio.">
+    <meta name="twitter:image" content="https://live.clutchreframe.com/og-image.png">
+
+    <title>ClutchReframe Live | LoL Stream Auto-Camera</title>
+    <link rel="canonical" href="https://live.clutchreframe.com/">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* ── Reset & Variables ── */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --cyan: #00d9ff;
+            --purple: #7c3aed;
+            --bg: #05050d;
+            --bg-card: rgba(255, 255, 255, 0.025);
+            --border: rgba(255, 255, 255, 0.06);
+            --border-accent: rgba(0, 217, 255, 0.15);
+            --text: #e2e8f0;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --nav-height: 72px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* ── Utility ── */
+        .gradient-text {
+            background: linear-gradient(135deg, var(--cyan) 0%, var(--purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-label {
+            display: inline-block;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--cyan);
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(1.8rem, 4vw, 2.6rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .section-desc {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            max-width: 520px;
+            margin: 0 auto;
+        }
+
+        .icon-box {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(124, 58, 237, 0.1));
+            border: 1px solid rgba(0, 217, 255, 0.18);
+            margin-bottom: 1.2rem;
+            color: var(--cyan);
+            flex-shrink: 0;
+        }
+
+        .icon-box svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        /* ── NAVBAR ── */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--nav-height);
+            z-index: 100;
+            background: rgba(5, 5, 13, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            position: relative;
+        }
+
+        .nav-logo {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-decoration: none;
+            color: var(--text);
+            z-index: 2;
+        }
+
+        #menu-toggle { display: none; }
+
+        .menu-btn {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 4px;
+            z-index: 2;
+        }
+
+        .menu-btn span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: var(--text);
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .nav-links a {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--cyan); }
+
+        /* ── HERO ── */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 120px 24px 80px;
+            overflow: hidden;
+        }
+
+        .hero::before,
+        .hero::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero::before {
+            width: 700px;
+            height: 700px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, rgba(0, 217, 255, 0.08) 0%, transparent 65%);
+            animation: pulseGlow 7s ease-in-out infinite alternate;
+        }
+
+        .hero::after {
+            width: 500px;
+            height: 500px;
+            top: 40%;
+            left: 55%;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.07) 0%, transparent 65%);
+            animation: pulseGlow 9s ease-in-out infinite alternate-reverse;
+        }
+
+        @keyframes pulseGlow {
+            from { transform: translate(-50%, -50%) scale(1);   opacity: 0.6; }
+            to   { transform: translate(-50%, -50%) scale(1.25); opacity: 1; }
+        }
+
+        .hero-inner {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(0, 217, 255, 0.06);
+            border: 1px solid rgba(0, 217, 255, 0.2);
+            border-radius: 50px;
+            padding: 7px 18px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--cyan);
+            margin-bottom: 2rem;
+        }
+
+        .badge span { opacity: 0.5; margin: 0 6px; }
+
+        .hero-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(2.4rem, 7vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.08;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.15rem);
+            color: var(--text-secondary);
+            max-width: 560px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.75;
+        }
+
+        /* CTA badge - not a link */
+        .cta-badge {
+            display: inline-block;
+            position: relative;
+            border-radius: 50px;
+            padding: 16px 42px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            background: rgba(5, 5, 13, 0.6);
+            overflow: hidden;
+            cursor: default;
+        }
+
+        .cta-badge::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50px;
+            padding: 1.5px;
+            background: linear-gradient(135deg, var(--cyan), var(--purple), var(--cyan));
+            background-size: 300% 300%;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: borderShift 5s ease infinite;
+        }
+
+        @keyframes borderShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .cta-sub {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 500;
+            opacity: 0.65;
+            margin-top: 4px;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        /* ── TRUST STRIP ── */
+        .trust-strip {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            padding: 48px 24px;
+            border-bottom: 1px solid var(--border);
+            flex-wrap: wrap;
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .trust-item svg {
+            width: 18px;
+            height: 18px;
+            color: var(--cyan);
+            flex-shrink: 0;
+        }
+
+        /* ── VIDEO ── */
+        .video-section {
+            padding: 120px 24px;
+            background: rgba(255, 255, 255, 0.01);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .video-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .video-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border-accent);
+            background: var(--bg-card);
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* ── FEATURES ── */
+        .features {
+            padding: 120px 24px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .features-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 36px 28px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(0, 217, 255, 0.06);
+            border-color: var(--border-accent);
+        }
+
+        .card h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+            color: #f1f5f9;
+        }
+
+        .card p {
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* ── HOW IT WORKS ── */
+        .how {
+            padding: 120px 24px;
+            background: rgba(255, 255, 255, 0.01);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .how-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .how-header {
+            text-align: center;
+            margin-bottom: 72px;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            position: relative;
+        }
+
+        .steps::before {
+            content: '';
+            position: absolute;
+            top: 28px;
+            left: calc(16.67% + 24px);
+            right: calc(16.67% + 24px);
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0, 217, 255, 0.25), rgba(124, 58, 237, 0.25), transparent);
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.12), rgba(124, 58, 237, 0.12));
+            border: 1px solid rgba(0, 217, 255, 0.25);
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--cyan);
+            margin: 0 auto 1.2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #f1f5f9;
+        }
+
+        .step p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.65;
+        }
+
+        /* ── COMPLIANCE ── */
+        .compliance {
+            padding: 120px 24px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .compliance-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .compliance-card {
+            position: relative;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 52px 48px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            overflow: hidden;
+        }
+
+        .compliance-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--cyan), var(--purple));
+        }
+
+        .compliance-item { text-align: center; }
+
+        .compliance-item .icon-box {
+            margin: 0 auto 1.2rem;
+        }
+
+        .compliance-item h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #f1f5f9;
+            margin-bottom: 0.5rem;
+        }
+
+        .compliance-item p {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.65;
+        }
+
+        /* ── FAQ ── */
+        .faq {
+            padding: 120px 24px;
+            background: rgba(255, 255, 255, 0.01);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .faq-inner {
+            max-width: 760px;
+            margin: 0 auto;
+        }
+
+        .faq-header {
+            text-align: center;
+            margin-bottom: 56px;
+        }
+
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        details {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            overflow: hidden;
+            transition: border-color 0.3s;
+        }
+
+        details[open] {
+            border-color: var(--border-accent);
+        }
+
+        summary {
+            padding: 22px 24px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #f1f5f9;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            list-style: none;
+        }
+
+        summary::-webkit-details-marker { display: none; }
+
+        summary::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border: solid var(--cyan);
+            border-width: 0 1.5px 1.5px 0;
+            transform: rotate(45deg);
+            transition: transform 0.3s;
+            flex-shrink: 0;
+            opacity: 0.6;
+        }
+
+        details[open] summary::after {
+            transform: rotate(-135deg);
+        }
+
+        details[open] summary {
+            border-bottom: 1px solid var(--border);
+        }
+
+        details p {
+            padding: 18px 24px 22px;
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            line-height: 1.75;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            padding: 72px 24px 40px;
+        }
+
+        .footer-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 48px;
+            margin-bottom: 48px;
+        }
+
+        .footer-brand-name {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-about {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            max-width: 340px;
+        }
+
+        .footer-col h4 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .footer-col a {
+            display: block;
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 5px 0;
+            transition: color 0.2s;
+        }
+
+        .footer-col a:hover { color: var(--cyan); }
+
+        .footer-divider {
+            height: 1px;
+            background: var(--border);
+            margin-bottom: 32px;
+        }
+
+        .footer-disclaimer {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            line-height: 1.75;
+            max-width: 720px;
+            margin: 0 auto 1.5rem;
+            text-align: center;
+        }
+
+        .footer-copy {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+        /* ── Animations ── */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .card:nth-child(1) { animation: fadeInUp 0.6s ease both 0.1s; }
+        .card:nth-child(2) { animation: fadeInUp 0.6s ease both 0.2s; }
+        .card:nth-child(3) { animation: fadeInUp 0.6s ease both 0.3s; }
+
+        /* ── Responsive ── */
+        @media (max-width: 768px) {
+            .menu-btn { display: flex; }
+
+            .nav-links {
+                position: absolute;
+                top: var(--nav-height);
+                left: 0;
+                right: 0;
+                background: rgba(5, 5, 13, 0.97);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                flex-direction: column;
+                padding: 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.35s ease, padding 0.35s ease;
+                border-bottom: 1px solid var(--border);
+                gap: 0;
+            }
+
+            #menu-toggle:checked ~ .nav-links {
+                max-height: 320px;
+                padding: 12px 24px;
+            }
+
+            .nav-links a {
+                padding: 12px 0;
+                font-size: 0.95rem;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .nav-links a:last-child { border-bottom: none; }
+
+            /* Hamburger → X animation */
+            #menu-toggle:checked ~ .menu-btn span:nth-child(1) {
+                transform: translateY(7px) rotate(45deg);
+            }
+            #menu-toggle:checked ~ .menu-btn span:nth-child(2) { opacity: 0; }
+            #menu-toggle:checked ~ .menu-btn span:nth-child(3) {
+                transform: translateY(-7px) rotate(-45deg);
+            }
+
+            .cards { grid-template-columns: 1fr; }
+            .steps { grid-template-columns: 1fr; gap: 32px; }
+            .steps::before { display: none; }
+            .compliance-card {
+                grid-template-columns: 1fr;
+                padding: 36px 28px;
+                gap: 32px;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero { padding: 100px 20px 60px; }
+            .features, .compliance { padding: 80px 20px; }
+            .how, .faq { padding: 80px 20px; }
+            .trust-strip { gap: 24px; }
+            .video-section { padding: 80px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ══════════ NAVBAR ══════════ -->
+<nav class="navbar">
+    <div class="nav-inner">
+        <a href="/" class="nav-logo">
+            <span class="gradient-text">ClutchReframe Live</span>
+        </a>
+        <input type="checkbox" id="menu-toggle">
+        <label for="menu-toggle" class="menu-btn" aria-label="Toggle navigation">
+            <span></span><span></span><span></span>
+        </label>
+        <div class="nav-links">
+            <a href="#demo">Demo</a>
+            <a href="#features">Features</a>
+            <a href="#how-it-works">How It Works</a>
+            <a href="#compliance">Compliance</a>
+            <a href="#faq">FAQ</a>
+            <a href="privacy.html">Privacy</a>
+            <a href="terms.html">Terms</a>
+        </div>
+    </div>
+</nav>
+
+<main>
+
+<!-- ══════════ HERO ══════════ -->
+<section class="hero">
+    <div class="hero-inner">
+        <h1 class="hero-title gradient-text">
+            ClutchReframe<br>
+            Live
+        </h1>
+
+        <p class="hero-subtitle">
+            Your stream, directed by AI. Automatic camera control for League of Legends live streams — smart panning and zooming that only your viewers see. No cloud, fully local.
+        </p>
+
+        <div class="cta-badge" role="status" aria-label="Coming Soon for OBS Studio">
+            Coming Soon for OBS Studio
+        </div>
+    </div>
+</section>
+
+<!-- ══════════ TRUST STRIP ══════════ -->
+<div class="trust-strip">
+    <div class="trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M23 7l-7 5 7 5V7z"/>
+            <rect x="1" y="5" width="15" height="14" rx="2"/>
+        </svg>
+        Built for OBS Studio
+    </div>
+    <div class="trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5.25-3.5 8.75-8 10-4.5-1.25-8-4.75-8-10V6l8-4z"/><path d="M9 12l2 2 4-4"/></svg>
+        100% Local Processing
+    </div>
+    <div class="trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
+        Zero Data Upload
+    </div>
+</div>
+
+<!-- ══════════ VIDEO DEMO ══════════ -->
+<section class="video-section" id="demo">
+    <div class="video-inner">
+        <div class="video-header">
+            <div class="section-label">Demo</div>
+            <h2 class="section-title gradient-text">See it in action</h2>
+            <p class="section-desc">Watch how ClutchReframe Live automatically controls the camera during a live LoL stream.</p>
+        </div>
+        <div class="video-wrapper">
+            <!-- TODO: Replace PLACEHOLDER_VIDEO_ID with actual Live demo video ID -->
+            <iframe src="https://www.youtube.com/embed/PLACEHOLDER_VIDEO_ID"
+                    title="ClutchReframe Live Demo"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════ FEATURES ══════════ -->
+<section class="features" id="features">
+    <div class="features-header">
+        <div class="section-label">Core Features</div>
+        <h2 class="section-title gradient-text">Built for live streamers</h2>
+        <p class="section-desc">Professional camera work for your LoL stream, fully automatic. Focus on your game — we handle the broadcast.</p>
+    </div>
+
+    <div class="cards">
+        <div class="card">
+            <div class="icon-box">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/></svg>
+            </div>
+            <h3>Smart Stream Camera</h3>
+            <p>Automatically pans and zooms your broadcast camera during kills, teamfights, and objectives. Your viewers see dynamic, professional camera work — while your own game view stays completely unchanged.</p>
+        </div>
+
+        <div class="card">
+            <div class="icon-box">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            </div>
+            <h3>Real-Time Game Detection</h3>
+            <p>Analyzes your screen capture in real-time to detect key game moments. Recognizes combat, objectives, and game phases to make intelligent camera decisions — all through visual analysis of the broadcast feed, never through game memory.</p>
+        </div>
+
+        <div class="card">
+            <div class="icon-box">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5.25-3.5 8.75-8 10-4.5-1.25-8-4.75-8-10V6l8-4z"/><path d="M9 12l2 2 4-4"/></svg>
+            </div>
+            <h3>Fully Local Processing</h3>
+            <p>Every camera decision, every frame analysis, every setting — processed entirely on your machine. No servers. No uploads. Your stream stays yours.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════ HOW IT WORKS ══════════ -->
+<section class="how" id="how-it-works">
+    <div class="how-inner">
+        <div class="how-header">
+            <div class="section-label">How It Works</div>
+            <h2 class="section-title gradient-text">From setup to stream in minutes</h2>
+        </div>
+
+        <div class="steps">
+            <div class="step">
+                <div class="step-num">01</div>
+                <h3>Set Up in OBS</h3>
+                <p>Install the ClutchReframe Live plugin in OBS Studio. Add it to your League of Legends game capture source, and you're ready to go.</p>
+            </div>
+
+            <div class="step">
+                <div class="step-num">02</div>
+                <h3>Go Live</h3>
+                <p>Start your stream as usual. ClutchReframe Live runs in the background, analyzing your game feed and making camera decisions in real-time — no manual input needed.</p>
+            </div>
+
+            <div class="step">
+                <div class="step-num">03</div>
+                <h3>Enjoy the Show</h3>
+                <p>Your viewers see professional camera work — smooth panning into teamfights, dynamic zooms on key plays. Meanwhile, your own game view stays completely untouched. Just play.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════ COMPLIANCE ══════════ -->
+<section class="compliance" id="compliance">
+    <div class="compliance-header">
+        <div class="section-label">Trust &amp; Compliance</div>
+        <h2 class="section-title gradient-text">Built with integrity</h2>
+        <p class="section-desc">Designed from day one to respect Riot Games' policies and your privacy.</p>
+    </div>
+
+    <div class="compliance-card">
+        <div class="compliance-item">
+            <div class="icon-box">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5.25-3.5 8.75-8 10-4.5-1.25-8-4.75-8-10V6l8-4z"/></svg>
+            </div>
+            <h3>Riot Games Compliant</h3>
+            <p>No competitive advantages. No game memory access. Camera decisions are based purely on visual analysis of the broadcast feed. Does not read abilities, cooldowns, health bars, minimap, or any competitive game state. Your in-game view is never altered.</p>
+        </div>
+
+        <div class="compliance-item">
+            <div class="icon-box">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M23 7l-7 5 7 5V7z"/>
+                    <rect x="1" y="5" width="15" height="14" rx="2"/>
+                </svg>
+            </div>
+            <h3>Broadcast Only</h3>
+            <p>ClutchReframe Live only affects what your viewers see. Your actual game screen remains 100% unchanged — no overlays, no information displayed, no advantage gained. It's a pure stream production tool.</p>
+        </div>
+
+        <div class="compliance-item">
+            <div class="icon-box">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27,6.96 12,12.01 20.73,6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+            </div>
+            <h3>OBS Studio Plugin</h3>
+            <p>Built as a native OBS Studio plugin. Integrates directly with your existing streaming setup. Works with any OBS-compatible platform — Twitch, YouTube, Kick, and more.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════ FAQ ══════════ -->
+<section class="faq" id="faq">
+    <div class="faq-inner">
+        <div class="faq-header">
+            <div class="section-label">FAQ</div>
+            <h2 class="section-title gradient-text">Common Questions</h2>
+        </div>
+
+        <div class="faq-list">
+            <details>
+                <summary>Does ClutchReframe Live provide any competitive advantage?</summary>
+                <p>No. ClutchReframe Live is a stream production tool that only affects what your viewers see. Your own in-game view is never changed — no overlays, no extra information, no advantage. Camera decisions are based on visual analysis of the broadcast feed, not game memory. It does not track abilities, cooldowns, or any competitive game state.</p>
+            </details>
+
+            <details>
+                <summary>What data does the plugin process?</summary>
+                <p>ClutchReframe Live analyzes your screen capture locally and in real-time to detect game events and drive camera movements. Frames are processed on-the-fly and never stored or uploaded. The plugin does not read competitive game state. It also stores your local configuration preferences. No personal information is collected or transmitted.</p>
+            </details>
+
+            <details>
+                <summary>Does the plugin read game memory or modify game files?</summary>
+                <p>No. ClutchReframe Live works entirely through screen capture and OBS Studio's plugin interface. It does not access game memory, modify game files, or inject code into the game process.</p>
+            </details>
+
+            <details>
+                <summary>Will it affect my game performance?</summary>
+                <p>ClutchReframe Live is designed to be lightweight. The analysis runs as a separate background process, keeping impact on game performance minimal. The OBS plugin itself adds negligible overhead to your stream encoding pipeline.</p>
+            </details>
+
+            <details>
+                <summary>Is ClutchReframe Live affiliated with Riot Games or OBS?</summary>
+                <p>No. ClutchReframe Live is an independent plugin. It is not endorsed by or affiliated with Riot Games or the OBS Project in any way.</p>
+            </details>
+        </div>
+    </div>
+</section>
+
+</main>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer>
+    <div class="footer-inner">
+        <div class="footer-grid">
+            <div>
+                <div class="footer-brand-name">
+                    <span class="gradient-text">ClutchReframe Live</span>
+                </div>
+                <p class="footer-about">Real-time automatic camera control for League of Legends live streams. Built for OBS Studio. Fully local.</p>
+            </div>
+
+            <div class="footer-col">
+                <h4>Product</h4>
+                <a href="#demo">Demo</a>
+                <a href="#features">Features</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#compliance">Compliance</a>
+                <a href="#faq">FAQ</a>
+                <a href="mailto:jintian138138@gmail.com">Contact</a>
+            </div>
+
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Service</a>
+            </div>
+        </div>
+
+        <div class="footer-divider"></div>
+
+        <p class="footer-disclaimer">
+            ClutchReframe Live is not endorsed by Riot Games and does not reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, League of Legends, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.
+        </p>
+
+        <p class="footer-copy">&copy; 2026 ClutchReframe. All rights reserved.</p>
+    </div>
+</footer>
+
+</body>
+</html>

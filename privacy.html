@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Privacy Policy for ClutchReframe Live. All data is processed and stored locally on your computer. No personal data is collected or transmitted.">
+    <meta name="theme-color" content="#05050d">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Privacy Policy | ClutchReframe Live">
+    <meta property="og:description" content="Privacy Policy for ClutchReframe Live. All data stays local. No personal data collected or transmitted.">
+    <meta property="og:url" content="https://live.clutchreframe.com/privacy.html">
+    <meta property="og:image" content="https://live.clutchreframe.com/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="ClutchReframe Live">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Privacy Policy | ClutchReframe Live">
+    <meta name="twitter:description" content="All data stays local. No personal data collected.">
+    <meta name="twitter:image" content="https://live.clutchreframe.com/og-image.png">
+
+    <title>Privacy Policy | ClutchReframe Live</title>
+    <link rel="canonical" href="https://live.clutchreframe.com/privacy.html">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --cyan: #00d9ff;
+            --purple: #7c3aed;
+            --bg: #05050d;
+            --border: rgba(255, 255, 255, 0.06);
+            --text: #e2e8f0;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --nav-height: 72px;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.75;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--cyan) 0%, var(--purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ── NAVBAR ── */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--nav-height);
+            z-index: 100;
+            background: rgba(5, 5, 13, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            position: relative;
+        }
+
+        .nav-logo {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-decoration: none;
+            color: var(--text);
+            z-index: 2;
+        }
+
+        .nav-back {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .nav-back:hover { color: var(--cyan); }
+
+        /* ── Page Layout ── */
+        .page-container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: calc(var(--nav-height) + 48px) 24px 80px;
+        }
+
+        .page-header {
+            margin-bottom: 48px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+        }
+
+        .page-header h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.4rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--cyan) 0%, var(--purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-header .updated {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* ── Content ── */
+        .content h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #f1f5f9;
+            margin: 2.4rem 0 0.7rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .content h2:first-child {
+            margin-top: 0;
+            padding-top: 0;
+            border-top: none;
+        }
+
+        .content p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.8rem;
+        }
+
+        .content strong { color: var(--text); }
+
+        .content ul {
+            list-style: none;
+            margin: 0.5rem 0 1rem;
+        }
+
+        .content ul li {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            padding: 0.35rem 0 0.35rem 1.4rem;
+            position: relative;
+        }
+
+        .content ul li::before {
+            content: '—';
+            position: absolute;
+            left: 0;
+            color: var(--cyan);
+            opacity: 0.6;
+        }
+
+        .content a {
+            color: var(--cyan);
+            text-decoration: none;
+        }
+
+        .content a:hover { text-decoration: underline; }
+
+        /* ── Disclaimer box ── */
+        .disclaimer-box {
+            margin-top: 2.4rem;
+            padding: 20px 24px;
+            background: rgba(0, 217, 255, 0.04);
+            border: 1px solid rgba(0, 217, 255, 0.15);
+            border-left: 3px solid var(--cyan);
+            border-radius: 10px;
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        /* ── Page Footer ── */
+        .page-footer {
+            margin-top: 56px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .page-footer a {
+            color: var(--text-muted);
+            text-decoration: none;
+        }
+
+        .page-footer a:hover { color: var(--cyan); }
+    </style>
+</head>
+<body>
+
+<!-- ══════════ NAVBAR ══════════ -->
+<nav class="navbar">
+    <div class="nav-inner">
+        <a href="index.html" class="nav-logo">
+            <span class="gradient-text">ClutchReframe</span> Live
+        </a>
+        <a href="index.html" class="nav-back">&larr; Back to Home</a>
+    </div>
+</nav>
+
+<div class="page-container">
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1>Privacy Policy</h1>
+        <p class="updated">Last Updated: February 27, 2026</p>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+        <h2>Data Collection</h2>
+        <p><strong>What we collect:</strong></p>
+        <ul>
+            <li>Screen capture frames analyzed locally and in real-time to detect game events and drive camera movements. Frames are processed on-the-fly — they are never stored, uploaded, or used to read competitive game state such as abilities, cooldowns, health bars, minimap, or any other competitive information</li>
+            <li>Local plugin settings and preferences</li>
+        </ul>
+
+        <p><strong>What we do NOT collect:</strong></p>
+        <ul>
+            <li>Personal identification information</li>
+            <li>In-game player IDs or Summoner Names</li>
+            <li>Riot account credentials</li>
+            <li>In-game chat logs or messages</li>
+            <li>Friend lists or social data</li>
+            <li>Enemy ability cooldowns or ultimate timers</li>
+            <li>Any data that provides competitive advantages</li>
+        </ul>
+
+        <p>ClutchReframe Live itself does not transmit any of the above data to external servers.</p>
+
+        <h2>Third-Party Platform (OBS Studio)</h2>
+        <p>ClutchReframe Live is built as a plugin for <strong>OBS Studio</strong>. OBS Studio is open-source software governed by its own license terms. ClutchReframe Live communicates with OBS exclusively through a local inter-process channel — no data is transmitted to any external server. For details about OBS Studio's data practices, please refer to the <a href="https://obsproject.com" target="_blank" rel="noopener">OBS Project website</a>.</p>
+
+        <h2>Data Storage</h2>
+        <p>All data is stored <strong>locally on your computer</strong>. We operate no servers and do not upload any data to the cloud or any third party.</p>
+
+        <h2>Data Sharing</h2>
+        <p>We do not share, sell, or transmit any of your data to third parties under any circumstances.</p>
+
+        <h2>Your Rights</h2>
+        <p>You can remove the plugin and all its configuration at any time. Uninstalling ClutchReframe Live removes all locally stored configuration data associated with the plugin.</p>
+
+        <h2>Children's Privacy</h2>
+        <p>ClutchReframe Live is not directed at children under the age of 13. We do not knowingly collect any personal information from children.</p>
+
+        <h2>Changes to This Policy</h2>
+        <p>We may update this Privacy Policy from time to time. Changes will be reflected on this page with an updated "Last Updated" date.</p>
+
+        <h2>Contact</h2>
+        <p>For questions about this Privacy Policy, please contact us at: <a href="mailto:jintian138138@gmail.com">jintian138138@gmail.com</a></p>
+
+        <div class="disclaimer-box">
+            <strong>Riot Games Disclaimer</strong><br><br>
+            ClutchReframe Live is not endorsed by Riot Games and does not reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, League of Legends, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.
+        </div>
+    </div>
+
+    <!-- Page Footer -->
+    <div class="page-footer">
+        <span>&copy; 2026 ClutchReframe. All rights reserved.</span>
+        <span>
+            <a href="privacy.html">Privacy Policy</a>
+            &nbsp;&middot;&nbsp;
+            <a href="terms.html">Terms of Service</a>
+        </span>
+    </div>
+</div>
+
+</body>
+</html>
