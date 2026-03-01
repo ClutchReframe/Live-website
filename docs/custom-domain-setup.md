@@ -1,3 +1,11 @@
+# 本地访问测试网站
+
+cd C:\Dev\Live-website
+python -m http.server 8080
+
+然后访问 http://localhost:8080
+
+
 # 自定义域名绑定指南
 
 将 `live.clutchreframe.com` 绑定到 GitHub Pages 的完整操作步骤。
@@ -55,11 +63,13 @@
 
 ## 步骤 3：GitHub Pages Custom Domain
 
-1. 打开 https://github.com/ClutchReframe/live-website/settings/pages
-2. 找到 **Custom domain** 输入框，输入 `live.clutchreframe.com`
-3. 点击 **Save**
-4. 等待页面显示 DNS 检查通过（绿色勾）
-5. 勾选 **Enforce HTTPS**（如果 DNS 还没生效，这个选项可能暂时不可用，等几分钟再试）
+1. 先在github上新建一个live-website public仓库
+2. 然后git push，如果报错就让ai帮忙上传
+3. 打开 https://github.com/ClutchReframe/live-website/settings/pages
+4. 找到 **Custom domain** 输入框，输入 `live.clutchreframe.com`
+5. 点击 **Save**
+6. 等待页面显示 DNS 检查通过（绿色勾）
+7. 勾选 **Enforce HTTPS**（如果 DNS 还没生效，这个选项可能暂时不可用，等几分钟再试）
 
 ---
 
