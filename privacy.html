@@ -222,7 +222,7 @@
 <nav class="navbar">
     <div class="nav-inner">
         <a href="index.html" class="nav-logo">
-            <span class="gradient-text">ClutchReframe</span> Live
+            <span class="gradient-text">ClutchReframe Live</span>
         </a>
         <a href="index.html" class="nav-back">&larr; Back to Home</a>
     </div>
@@ -240,7 +240,7 @@
         <h2>Data Collection</h2>
         <p><strong>What we collect:</strong></p>
         <ul>
-            <li>Game monitor's screen capture frames analyzed locally and in real time to detect game events and drive camera movements. Frames are processed on-the-fly and are never stored, uploaded, or used to extract or track specific competitive data such as abilities, cooldowns, health bars, minimap positions, or any other individual game metrics</li>
+            <li>Game monitor's screen capture frames visually analyzed locally and in real time to drive camera movements. Frames are processed on-the-fly and are never stored, uploaded, or used to extract or track specific competitive data such as abilities, cooldowns, health bars, minimap positions, or any other individual game metrics</li>
             <li>Local plugin settings and preferences</li>
         </ul>
 
@@ -251,14 +251,14 @@
             <li>Riot account credentials</li>
             <li>In-game chat logs or messages</li>
             <li>Friend lists or social data</li>
-            <li>Enemy ability cooldowns or ultimate timers</li>
+            <li>Ability cooldowns or ultimate timers</li>
             <li>Any data that provides competitive advantages</li>
         </ul>
 
         <p>ClutchReframe Live itself does not transmit any of the above data to external servers.</p>
 
         <h2>Third-Party Platform (OBS Studio)</h2>
-        <p>ClutchReframe Live is built as a video filter for <strong>OBS Studio</strong>. OBS Studio is open-source software governed by its own license terms. ClutchReframe Live communicates with OBS exclusively through a local inter-process channel. No data is transmitted to any external server. For details about OBS Studio's data practices, please refer to the <a href="https://obsproject.com" target="_blank" rel="noopener">OBS Project website</a>.</p>
+        <p>ClutchReframe Live is built as a video filter for <strong>OBS Studio</strong>. OBS Studio is open-source software governed by its own license terms. The architecture consists of two independent components that communicate through a local inter-process channel: a separate local application that performs visual analysis of the screen capture and outputs ROI (Region of Interest) coordinates, and an OBS filter plugin that receives these coordinates and applies the video crop. No data is transmitted to any external server. For details about OBS Studio's data practices, please refer to the <a href="https://obsproject.com" target="_blank" rel="noopener">OBS Project website</a>.</p>
 
         <h2>Data Storage</h2>
         <p>All data is stored <strong>locally on your computer</strong>. We operate no servers and do not upload any data to the cloud or any third party.</p>
