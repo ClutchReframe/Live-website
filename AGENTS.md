@@ -15,8 +15,8 @@ When adding pages, use flat naming like `about.html` and keep shared visual patt
 ## Build, Test, and Development Commands
 There is no compile/build pipeline.
 
-- `python -m http.server 8080`
-  Runs a local static server at `http://localhost:8080`.
+- `python -m http.server 3000`
+  Runs a local static server at `http://localhost:3000`.
 - `rg --files`
   Quick inventory of tracked files before committing.
 - `git diff --check`

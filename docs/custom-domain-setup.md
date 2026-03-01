@@ -1,9 +1,9 @@
 # 本地访问测试网站
 
 cd C:\Dev\Live-website
-python -m http.server 8080
+python -m http.server 3000
 
-然后访问 http://localhost:8080
+然后访问 http://localhost:3000
 
 
 # 自定义域名绑定指南

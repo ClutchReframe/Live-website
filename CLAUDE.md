@@ -64,8 +64,8 @@
 
 ## 本地预览
 
-python -m http.server 8080
-# 访问 http://localhost:8080
+python -m http.server 3000
+# 访问 http://localhost:3000
 
 ---
 
