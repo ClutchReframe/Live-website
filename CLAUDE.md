@@ -56,7 +56,7 @@
 
 - **产品名：** ClutchReframe Live
 - **一句话描述：** Your stream, directed by AI.
-- **联系邮箱：** jintian138138@gmail.com
+- **联系邮箱：** clutchreframe@gmail.com
 - **平台：** OBS Studio
 - **游戏：** League of Legends
 
